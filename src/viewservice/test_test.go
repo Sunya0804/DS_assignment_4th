@@ -16,7 +16,7 @@ func check(t *testing.T, ck *Clerk, p string, b string, n uint) {
 		t.Fatalf("wanted backup %v, got %v", b, view.Backup)
 	}
 	if n != 0 && n != view.Viewnum {
-		t.Fatalf("wanted viewnum %v, got %v", n, view.Viewnum)
+		t.Fatalf("wanted viewNum %v, got %v", n, view.Viewnum)
 	}
 	if ck.Primary() != p {
 		t.Fatalf("wanted primary %v, got %v", p, ck.Primary())
@@ -74,7 +74,7 @@ func Test1(t *testing.T) {
 			}
 			time.Sleep(PingInterval)
 		}
-		check(t, ck1, ck1.me, ck2.me, vx.Viewnum+1)	
+		check(t, ck1, ck1.me, ck2.me, vx.Viewnum+1)
 	}
 	fmt.Printf("  ... Passed\n")
 
