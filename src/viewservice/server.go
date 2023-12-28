@@ -34,11 +34,11 @@ func (vs *ViewServer) Ping(args *PingArgs, reply *PingReply) error {
 	defer vs.mu.Unlock()
 
 	if vs.primaryAckedCurrView == false {
-		if (vs.currView.Primary == args.Me || vs.idleServer[0] == args.Me) &&
-			vs.viewNum[vs.currView.Primary] == vs.currView.Viewnum {
+		if (vs.currView.Primary == args.Me || vs.idleServer[0] == args.Me) && // primary server가 ping을 보낸 경우
+			vs.viewNum[vs.currView.Primary] == vs.currView.Viewnum { // primary server가 현재 view를 ACK한 경우
 			vs.primaryAckedCurrView = true
 		} else {
-			if vs.viewNum[vs.currView.Primary] == 0 && vs.currView.Viewnum == args.Viewnum { // pri srv first run
+			if vs.viewNum[vs.currView.Primary] == 0 && vs.currView.Viewnum == args.Viewnum { // primary server를 처음으로 실행한 경우
 				vs.primaryAckedCurrView = true
 			}
 		}
@@ -61,7 +61,6 @@ func (vs *ViewServer) Get(args *GetArgs, reply *GetReply) error {
 // if servers have died or recovered, and change the view
 // accordingly.
 func (vs *ViewServer) tick() {
-
 	// Your code here.
 	vs.mu.Lock()
 	defer vs.mu.Unlock()
